@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
+@Entity(name = "orders")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,13 +17,12 @@ import java.util.Collection;
 public class OrderEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
     private OrderStatusEnum status;
 
-    @ManyToOne(targetEntity = UserEntity.class)
+    @ManyToOne
     @JoinColumn(columnDefinition = "user_id")
     private UserEntity user;
 
-    @OneToMany(targetEntity = OrderDetailEntity.class, mappedBy = "order")
+    @OneToMany(mappedBy = "order")
     private Collection<OrderDetailEntity> orderDetails;
 }

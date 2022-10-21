@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-10-21T16:45:05+0700",
+    date = "2022-10-22T00:33:06+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 @Component
@@ -25,7 +25,6 @@ public class ProductCommentMapperImpl extends ProductCommentMapper {
         productCommentProduceDto.createdDate( map( productCommentEntity.getCreatedDate() ) );
         productCommentProduceDto.updatedDate( map( productCommentEntity.getUpdatedDate() ) );
         productCommentProduceDto.content( productCommentEntity.getContent() );
-        productCommentProduceDto.parentId( productCommentEntity.getParentId() );
         productCommentProduceDto.createdBy( productCommentEntity.getCreatedBy() );
 
         return productCommentProduceDto.build();

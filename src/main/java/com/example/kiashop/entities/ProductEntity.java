@@ -7,14 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 
-@Entity
+@Entity(name = "products")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,37 +25,22 @@ public class ProductEntity extends BaseEntity {
 
     private Integer discount;
 
-    private String status;
-
-    private String style;
-
-    @Column(length = 20)
-    private String gender;
-
-    private String origin;
-
-    private String material;
-
-    private String productionMethod;
-
-    private String size;
-
-    private String accessory;
-
-    private String washingMethod;
-
     @Column(columnDefinition = "text")
     private String description;
 
-    @OneToMany(targetEntity = OrderDetailEntity.class, mappedBy = "product")
-    private Collection<OrderDetailEntity> orderDetails;
+    @OneToMany(mappedBy = "product")
+    private List<OrderDetailEntity> orderDetails;
 
-    @OneToMany(targetEntity = ProductImageEntity.class, mappedBy = "product")
-    private Collection<ProductImageEntity> productImages;
+    @OneToMany(mappedBy = "product")
+    private List<ProductImageEntity> productImages;
 
     @ManyToMany
-    private Collection<CategoryEntity> categories;
+    @JoinTable(
+            name = "products_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<CategoryEntity> categories;
 
-    @OneToMany(targetEntity = ProductCommentEntity.class, mappedBy = "product")
-    private Collection<ProductCommentEntity> productComments;
+    @OneToMany(mappedBy = "product")
+    private List<ProductCommentEntity> productComments;
 }

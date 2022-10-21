@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
         if (mUserRepository.existsByEmail(userConsumeDto.getEmail())) {
             throw new BadRequestException("Email already exist");
         }
-        userEntity.setRoles(mRoleRepository.findByName(RoleEnum.ROLE_USER));
+//        userEntity.setRoles(mRoleRepository.findByName(RoleEnum.ROLE_USER));
         userEntity.setPassword(mPasswordEncoder.encode(userEntity.getPassword()));
         mUserRepository.save(userEntity);
         UserProduceDto userProduceDto = mUserMapper.toUserProduceDto(userEntity);

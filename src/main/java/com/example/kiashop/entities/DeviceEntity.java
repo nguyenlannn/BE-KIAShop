@@ -16,10 +16,11 @@ import javax.persistence.ManyToOne;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "devices")
 @SuperBuilder
 public class DeviceEntity extends BaseEntity {
 
+    @Column(columnDefinition = "text")
     private String userAgent;
 
     @Column(columnDefinition = "text")
@@ -28,7 +29,7 @@ public class DeviceEntity extends BaseEntity {
     @Column(columnDefinition = "text")
     private String refreshToken;
 
-    @ManyToOne(targetEntity = UserEntity.class)
+    @ManyToOne
     @JoinColumn(columnDefinition = "user_id")
     private UserEntity user;
 }

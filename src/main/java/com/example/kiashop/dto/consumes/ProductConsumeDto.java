@@ -53,15 +53,7 @@ public class ProductConsumeDto implements Serializable {
                 .name(name)
                 .price(price)
                 .discount(discount)
-                .status(status)
-                .style(style)
-                .gender(gender)
-                .origin(origin)
-                .material(material)
-                .productionMethod(productionMethod)
-                .size(size)
-                .accessory(accessory)
-                .washingMethod(washingMethod)
+
                 .description(description)
                 .build();
     }
