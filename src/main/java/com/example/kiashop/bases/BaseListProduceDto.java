@@ -2,6 +2,7 @@ package com.example.kiashop.bases;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +14,9 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Builder
 @Getter
+@Setter
+@Builder
 public final class BaseListProduceDto<T> {
     private final List<T> content;
     private final Integer page;
@@ -71,7 +73,6 @@ public final class BaseListProduceDto<T> {
 
             }
         }
-
         return BaseListProduceDto
                 .<R>builder()
                 .content(newContent)

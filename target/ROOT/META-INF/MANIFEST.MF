@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
-Built-By: Admin
-Build-Jdk: Amazon Corretto version 11.0.16
+Built-By: CuongNH3
+Build-Jdk: 11.0.16
 Implementation-Title: BE-KIAShop
 Implementation-Version: 0.0.1-SNAPSHOT
 Implementation-Vendor-Id: com.example

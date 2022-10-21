@@ -54,8 +54,8 @@ public class BasicAuthController extends BaseController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<BaseResponseDto> createRegister(@RequestBody UserConsumeDto userConsumeDto){
-        return created(mUserService.createRegister(userConsumeDto),"Create user successful");
+    public ResponseEntity<BaseResponseDto> createRegister(@RequestBody UserConsumeDto userConsumeDto) {
+        return created(mUserService.createRegister(userConsumeDto), "Create user successful");
     }
 
     @PostMapping("/reset-password")

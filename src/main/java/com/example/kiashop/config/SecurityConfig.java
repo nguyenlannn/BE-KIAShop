@@ -23,8 +23,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -42,27 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Audi
 
     @Value("${base.api}")
     private String BASE_API;
-
-    @Value("${domain}")
-    private String DOMAIN;
-
-    @Value("${domain1}")
-    private String DOMAIN1;
-
-    @Value("${domain2}")
-    private String DOMAIN2;
-
-    @Value("${domain3}")
-    private String DOMAIN3;
-
-    @Value("${domain4}")
-    private String DOMAIN4;
-
-    @Value("${domain5}")
-    private String DOMAIN5;
-
-    @Value("${domain6}")
-    private String DOMAIN6;
 
     @Value("${email.name}")
     private String EMAIL_NAME;
@@ -114,15 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Audi
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        List<String> list = new ArrayList<>();
-        list.add(DOMAIN);
-        list.add(DOMAIN1);
-        list.add(DOMAIN2);
-        list.add(DOMAIN3);
-        list.add(DOMAIN4);
-        list.add(DOMAIN5);
-        list.add(DOMAIN6);
-        config.setAllowedOrigins(list);
+        config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
