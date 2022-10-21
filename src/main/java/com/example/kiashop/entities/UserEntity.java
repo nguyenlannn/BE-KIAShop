@@ -2,51 +2,57 @@ package com.example.kiashop.entities;
 
 import com.example.kiashop.bases.BaseEntity;
 import com.example.kiashop.enums.GenderEnum;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Entity
+@Entity(name = "users")
 public class UserEntity extends BaseEntity {
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(columnDefinition = "text")
     private String password;
 
-    @Column(length = 50)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(length = 50)
+    @Column
     private String firstName;
 
-    @Column(length = 50)
+    @Column
     private String lastName;
 
-    @Column(columnDefinition = "text")
+    @Column
     private String avatar;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10)
     private GenderEnum gender;
 
     @ManyToMany
-    private Collection<RoleEntity> roles;
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<RoleEntity> roles;
 
-    @OneToMany(targetEntity = DeviceEntity.class, mappedBy = "user")
-    private Collection<DeviceEntity> devices;
+    @OneToMany(mappedBy = "user")
+    private List<DeviceEntity> devices;
 
-    @OneToMany(targetEntity = OrderEntity.class, mappedBy = "user")
-    private Collection<OrderEntity> orders;
+    @OneToMany(mappedBy = "user")
+    private List<OrderEntity> orders;
 
-    @OneToMany(targetEntity = ProductCommentEntity.class, mappedBy = "user")
-    private Collection<ProductCommentEntity> productComments;
+    @OneToMany(mappedBy = "user")
+    private List<ProductCommentEntity> productComments;
 }

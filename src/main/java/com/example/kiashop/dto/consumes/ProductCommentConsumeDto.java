@@ -23,7 +23,7 @@ public class ProductCommentConsumeDto implements Serializable {
     public ProductCommentEntity toProductCommentEntity() {
         return ProductCommentEntity.builder()
                 .content(content)
-                .parentId(parentId)
+//                .parentId(parentId)
                 .build();
     }
 }

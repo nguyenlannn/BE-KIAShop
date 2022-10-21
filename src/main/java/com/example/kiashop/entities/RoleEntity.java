@@ -8,12 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
+import java.util.List;
 
-@Entity
+@Entity(name = "roles")
 @Getter
 @Setter
 @SuperBuilder
@@ -22,6 +20,9 @@ import javax.persistence.Enumerated;
 public class RoleEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true, length = 10)
+    @Column(nullable = false, unique = true)
     private RoleEnum name;
+
+    @ManyToMany(mappedBy = "roles")
+    private List<UserEntity> users;
 }

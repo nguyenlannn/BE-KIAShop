@@ -20,7 +20,7 @@ public class CategoryConsumeDto implements Serializable {
     public CategoryEntity toCategoryEntity() {
         return CategoryEntity.builder()
                 .name(name)
-                .parentId(parentId)
+//                .parentId(parentId)
                 .build();
     }
 }

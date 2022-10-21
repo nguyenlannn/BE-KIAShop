@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity
+@Entity(name = "order_detail_notes")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public class OrderDetailNoteEntity extends BaseEntity {
     @Column(columnDefinition = "text")
     private String content;
 
-    @ManyToOne(targetEntity = OrderDetailEntity.class)
+    @ManyToOne
     @JoinColumn(columnDefinition = "order_detail_id")
     private OrderDetailEntity orderDetail;
 }

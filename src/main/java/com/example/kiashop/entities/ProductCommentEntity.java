@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
-@Entity
+@Entity(name = "product_comments")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,13 +21,17 @@ public class ProductCommentEntity extends BaseEntity {
     @Column(columnDefinition = "text")
     private String content;
 
-    private Long parentId;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "parent_id")
+    private ProductCommentEntity productComment;
 
-    @ManyToOne(targetEntity = ProductEntity.class)
+    @OneToMany(mappedBy = "productComment")
+    private List<ProductCommentEntity> productComments;
+    @ManyToOne
     @JoinColumn(columnDefinition = "product_id")
     private ProductEntity product;
 
-    @ManyToOne(targetEntity = UserEntity.class)
+    @ManyToOne
     @JoinColumn(columnDefinition = "user_id")
     private UserEntity user;
 }

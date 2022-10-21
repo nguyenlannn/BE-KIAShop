@@ -12,9 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 
-@Entity
+@Entity(name = "order_details")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,14 +28,14 @@ public class OrderDetailEntity extends BaseEntity {
 
     private Integer discount;
 
-    @ManyToOne(targetEntity = OrderEntity.class)
+    @ManyToOne
     @JoinColumn(columnDefinition = "order_id")
     private OrderEntity order;
 
-    @ManyToOne(targetEntity = ProductEntity.class)
+    @ManyToOne
     @JoinColumn(columnDefinition = "product_id")
     private ProductEntity product;
 
-    @OneToMany(targetEntity = OrderDetailNoteEntity.class, mappedBy = "orderDetail")
-    private Collection<OrderDetailNoteEntity> orderDetailNotes;
+    @OneToMany(mappedBy = "orderDetail")
+    private List<OrderDetailNoteEntity> orderDetailNotes;
 }

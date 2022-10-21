@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-10-21T16:45:05+0700",
+    date = "2022-10-22T00:33:06+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 @Component
@@ -25,7 +25,6 @@ public class CategoryMapperImpl extends CategoryMapper {
         categoryProduceDto.createdDate( map( categoryEntity.getCreatedDate() ) );
         categoryProduceDto.updatedDate( map( categoryEntity.getUpdatedDate() ) );
         categoryProduceDto.name( categoryEntity.getName() );
-        categoryProduceDto.parentId( categoryEntity.getParentId() );
 
         return categoryProduceDto.build();
     }

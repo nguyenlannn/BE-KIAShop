@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity
+@Entity(name = "product_images")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,10 +20,9 @@ import javax.persistence.ManyToOne;
 @SuperBuilder
 public class ProductImageEntity extends BaseEntity {
 
-    @Column(columnDefinition = "text")
     private String path;
 
-    @ManyToOne(targetEntity = ProductEntity.class)
+    @ManyToOne
     @JoinColumn(columnDefinition = "product_id")
     private ProductEntity product;
 }

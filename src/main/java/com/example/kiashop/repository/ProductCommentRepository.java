@@ -19,7 +19,7 @@ public interface ProductCommentRepository extends JpaRepository<ProductCommentEn
     @Query(nativeQuery = true, value = "DELETE FROM product_comment_entity where  id=?1")
     void deleteProductComment(Long id);
 
-    Page<ProductCommentEntity> findByProductIdAndParentId(Long productId, Long parentId, Pageable pageable);
-
-    List<ProductCommentEntity> findByParentId(Long parentId);
+//    Page<ProductCommentEntity> findByProductIdAndParentId(Long productId, Long parentId, Pageable pageable);
+//
+//    List<ProductCommentEntity> findByParentId(Long parentId);
 }

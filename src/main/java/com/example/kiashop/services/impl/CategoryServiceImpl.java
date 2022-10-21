@@ -70,23 +70,23 @@ public class CategoryServiceImpl implements CategoryService {
         if (Objects.isNull(categoryEntity)) {
             throw new BadRequestException("Category does not exist");
         }
-        List<CategoryEntity> categoryEntityList = mCategoryRepository.findByParentId(id);
-        List<Long> list = categoryEntityList.stream().map(BaseEntity::getId).collect(Collectors.toList());
-        list.add(id);
-        mCategoryRepository.deleteProductCategoryById(list);
-        mCategoryRepository.deleteAllById(list);
+//        List<CategoryEntity> categoryEntityList = mCategoryRepository.findByParentId(id);
+//        List<Long> list = categoryEntityList.stream().map(BaseEntity::getId).collect(Collectors.toList());
+//        list.add(id);
+//        mCategoryRepository.deleteProductCategoryById(list);
+//        mCategoryRepository.deleteAllById(list);
     }
 
     @Override
     public CategoryProduceDto addCategory(CategoryConsumeDto categoryConsumeDto) {
 
         CategoryEntity categoryEntity = categoryConsumeDto.toCategoryEntity();
-        if (categoryEntity.getParentId() != null && !mCategoryRepository.existsById(categoryEntity.getParentId())) {
-            throw new BadRequestException("Parent category does not exist");
-        }
-        if (categoryEntity.getParentId() == null) {
-            categoryEntity.setParentId(0L);
-        }
+//        if (categoryEntity.getParentId() != null && !mCategoryRepository.existsById(categoryEntity.getParentId())) {
+//            throw new BadRequestException("Parent category does not exist");
+//        }
+//        if (categoryEntity.getParentId() == null) {
+//            categoryEntity.setParentId(0L);
+//        }
         if (mCategoryRepository.existsByName(categoryEntity.getName())) {
             throw new BadRequestException("Category already exists");
         }
@@ -114,7 +114,7 @@ public class CategoryServiceImpl implements CategoryService {
                     if (!mCategoryRepository.existsById(parentID)) {
                         throw new BadRequestException("Parent category does not exist");
                     }
-                    categoryEntity.setParentId(parentID);
+//                    categoryEntity.setParentId(parentID);
                     break;
             }
         }

@@ -79,33 +79,7 @@ public class ProductServiceImpl implements ProductService {
                 case "discount":
                     productEntity.setDiscount(Integer.parseInt(map.get(i).toString()));
                     break;
-                case "status":
-                    productEntity.setStatus(map.get(i).toString());
-                    break;
-                case "style":
-                    productEntity.setStyle(map.get(i).toString());
-                    break;
-                case "gender":
-                    productEntity.setGender(map.get(i).toString());
-                    break;
-                case "origin":
-                    productEntity.setOrigin(map.get(i).toString());
-                    break;
-                case "material":
-                    productEntity.setMaterial(map.get(i).toString());
-                    break;
-                case "productionMethod":
-                    productEntity.setProductionMethod(map.get(i).toString());
-                    break;
-                case "size":
-                    productEntity.setSize(map.get(i).toString());
-                    break;
-                case "accessory":
-                    productEntity.setAccessory(map.get(i).toString());
-                    break;
-                case "washingMethod":
-                    productEntity.setWashingMethod(map.get(i).toString());
-                    break;
+
                 case "description":
                     productEntity.setDescription(map.get(i).toString());
                     break;

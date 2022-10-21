@@ -42,12 +42,12 @@ public class ProductCommentServiceImpl implements ProductCommentService {
             throw new BadRequestException("Product does not exist");
         }
         ProductCommentEntity productCommentEntity = productCommentConsumeDto.toProductCommentEntity();
-        if (productCommentEntity.getParentId() != null && !mProductCommentRepository.existsById(productCommentEntity.getParentId())) {
-            throw new BadRequestException("ParentId product comment does not exist");
-        }
-        if (productCommentEntity.getParentId() == null) {
-            productCommentEntity.setParentId(0L);
-        }
+//        if (productCommentEntity.getParentId() != null && !mProductCommentRepository.existsById(productCommentEntity.getParentId())) {
+//            throw new BadRequestException("ParentId product comment does not exist");
+//        }
+//        if (productCommentEntity.getParentId() == null) {
+//            productCommentEntity.setParentId(0L);
+//        }
         UserEntity userEntity = mUserService.getCurrentUser();
         productCommentEntity.setProduct(productEntity);
         productCommentEntity.setUser(userEntity);
@@ -81,51 +81,52 @@ public class ProductCommentServiceImpl implements ProductCommentService {
 
     @Override
     public BaseListProduceDto<ProductCommentProduceDto> getCommentByProductId(Long id, Pageable pageable) {
-        Page<ProductCommentEntity> productCommentEntityPage = mProductCommentRepository.findByProductIdAndParentId(
-                id,
-                0L
-                , pageable);
-        List<ProductCommentProduceDto> productCommentProduceDtoList = productCommentEntityPage.getContent().stream().map(o -> {
-            ProductCommentProduceDto productCommentProduceDto = mProductCommentMapper.toProductCommentProduceDto(o);
-            productCommentProduceDto.setUser(mUserMapper.toUserProduceDto(o.getUser()));
-            return productCommentProduceDto;
-        }).collect(Collectors.toList());
-
-        List<ProductCommentProduceDto> productCommentProduceDtoList1 = productCommentProduceDtoList.stream()
-                .map(o -> {
-                    List<ProductCommentEntity> productCommentEntity = mProductCommentRepository.findByParentId(o.getId());
-                    List<ProductCommentProduceDto> productCommentProduceDto = productCommentEntity.stream().map(oo -> {
-                        ProductCommentProduceDto productCommentProduceDto1 = mProductCommentMapper.toProductCommentProduceDto(oo);
-                        productCommentProduceDto1.setUser(mUserMapper.toUserProduceDto(oo.getUser()));
-                        return productCommentProduceDto1;
-                    }).collect(Collectors.toList());
-                    return ProductCommentProduceDto.builder()
-                            .id(o.getId())
-                            .createdDate(o.getCreatedDate())
-                            .updatedDate(o.getUpdatedDate())
-                            .content(o.getContent())
-                            .parentId(o.getParentId())
-                            .createdBy(o.getCreatedBy())
-                            .user(o.getUser())
-                            .productComment1(productCommentProduceDto.stream().map(oo ->
-                                    ProductCommentProduce1Dto.builder()
-                                            .id(oo.getId())
-                                            .createdDate(oo.getCreatedDate())
-                                            .updatedDate(oo.getUpdatedDate())
-                                            .content(oo.getContent())
-                                            .parentId(oo.getParentId())
-                                            .user(oo.getUser())
-                                            .createdBy(oo.getCreatedBy())
-                                            .build()
-                            ).collect(Collectors.toList()))
-                            .build();
-                }).collect(Collectors.toList());
-        return BaseListProduceDto.<ProductCommentProduceDto>builder()
-                .content(productCommentProduceDtoList1)
-                .totalElements(productCommentEntityPage.getTotalElements())
-                .totalPages(productCommentEntityPage.getTotalPages())
-                .size(pageable.getPageSize())
-                .page(pageable.getPageNumber())
-                .build();
+//        Page<ProductCommentEntity> productCommentEntityPage = mProductCommentRepository.findByProductIdAndParentId(
+//                id,
+//                0L
+//                , pageable);
+//        List<ProductCommentProduceDto> productCommentProduceDtoList = productCommentEntityPage.getContent().stream().map(o -> {
+//            ProductCommentProduceDto productCommentProduceDto = mProductCommentMapper.toProductCommentProduceDto(o);
+//            productCommentProduceDto.setUser(mUserMapper.toUserProduceDto(o.getUser()));
+//            return productCommentProduceDto;
+//        }).collect(Collectors.toList());
+//
+//        List<ProductCommentProduceDto> productCommentProduceDtoList1 = productCommentProduceDtoList.stream()
+//                .map(o -> {
+//                    List<ProductCommentEntity> productCommentEntity = mProductCommentRepository.findByParentId(o.getId());
+//                    List<ProductCommentProduceDto> productCommentProduceDto = productCommentEntity.stream().map(oo -> {
+//                        ProductCommentProduceDto productCommentProduceDto1 = mProductCommentMapper.toProductCommentProduceDto(oo);
+//                        productCommentProduceDto1.setUser(mUserMapper.toUserProduceDto(oo.getUser()));
+//                        return productCommentProduceDto1;
+//                    }).collect(Collectors.toList());
+//                    return ProductCommentProduceDto.builder()
+//                            .id(o.getId())
+//                            .createdDate(o.getCreatedDate())
+//                            .updatedDate(o.getUpdatedDate())
+//                            .content(o.getContent())
+//                            .parentId(o.getParentId())
+//                            .createdBy(o.getCreatedBy())
+//                            .user(o.getUser())
+//                            .productComment1(productCommentProduceDto.stream().map(oo ->
+//                                    ProductCommentProduce1Dto.builder()
+//                                            .id(oo.getId())
+//                                            .createdDate(oo.getCreatedDate())
+//                                            .updatedDate(oo.getUpdatedDate())
+//                                            .content(oo.getContent())
+//                                            .parentId(oo.getParentId())
+//                                            .user(oo.getUser())
+//                                            .createdBy(oo.getCreatedBy())
+//                                            .build()
+//                            ).collect(Collectors.toList()))
+//                            .build();
+//                }).collect(Collectors.toList());
+//        return BaseListProduceDto.<ProductCommentProduceDto>builder()
+//                .content(productCommentProduceDtoList1)
+//                .totalElements(productCommentEntityPage.getTotalElements())
+//                .totalPages(productCommentEntityPage.getTotalPages())
+//                .size(pageable.getPageSize())
+//                .page(pageable.getPageNumber())
+//                .build();
+        return null;
     }
 }

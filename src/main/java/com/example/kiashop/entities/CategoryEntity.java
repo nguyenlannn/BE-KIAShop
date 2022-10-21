@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.List;
 
-@Entity
+@Entity(name = "categories")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,5 +20,13 @@ public class CategoryEntity extends BaseEntity {
 
     private String name;
 
-    private Long parentId;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "parent_id")
+    private CategoryEntity category;
+
+    @OneToMany(mappedBy = "category")
+    private List<CategoryEntity> categories;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<ProductEntity> products;
 }
