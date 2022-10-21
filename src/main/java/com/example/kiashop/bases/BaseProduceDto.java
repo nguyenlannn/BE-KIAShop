@@ -1,15 +1,12 @@
 package com.example.kiashop.bases;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.MappedSuperclass;
-import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -17,10 +14,8 @@ import java.util.Date;
 @MappedSuperclass
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
-public abstract class BaseProduceDto<ID> implements Serializable {
+public abstract class BaseProduceDto<ID> {
 
-    @JsonProperty("id")
     private ID id;
 
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
