@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.kiashop.dto.consumes.RegisterConsumeDto;
 import com.example.kiashop.dto.consumes.UserConsumeDto;
 import com.example.kiashop.dto.produces.UserProduceDto;
 import com.example.kiashop.entities.DeviceEntity;
@@ -96,15 +97,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserProduceDto createRegister(UserConsumeDto userConsumeDto) {
-        UserEntity userEntity = userConsumeDto.toUserEntity();
-        if (mUserRepository.existsByUsername(userConsumeDto.getUsername())) {
+    public UserProduceDto register(RegisterConsumeDto registerConsumeDto) {
+        UserEntity userEntity = registerConsumeDto.toUserEntity();
+        if (mUserRepository.existsByUsername(registerConsumeDto.getUsername())) {
             throw new BadRequestException("User name already exist");
         }
-        if (mUserRepository.existsByEmail(userConsumeDto.getEmail())) {
+        if (mUserRepository.existsByEmail(registerConsumeDto.getEmail())) {
             throw new BadRequestException("Email already exist");
         }
-//        userEntity.setRoles(mRoleRepository.findByName(RoleEnum.ROLE_USER));
+        userEntity.setRoles(mRoleRepository.findByName(RoleEnum.ROLE_USER));
         userEntity.setPassword(mPasswordEncoder.encode(userEntity.getPassword()));
         mUserRepository.save(userEntity);
         UserProduceDto userProduceDto = mUserMapper.toUserProduceDto(userEntity);
