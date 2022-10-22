@@ -5,7 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.kiashop.bases.BaseResponseDto;
+import com.example.kiashop.entities.DeviceEntity;
 import com.example.kiashop.repository.DeviceRepository;
+import com.example.kiashop.util.EncryptedDecryptedUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +36,8 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public class FilterConfig extends OncePerRequestFilter {
 
     private final DeviceRepository mDeviceRepository;
+
+    private final EncryptedDecryptedUtil mEncryptedDecryptedUtil;
 
     @Value("${jwt.secret}")
     private String JWT_SECRET;
@@ -64,7 +68,10 @@ public class FilterConfig extends OncePerRequestFilter {
                             new UsernamePasswordAuthenticationToken(username, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-                    if (mDeviceRepository.existsByUserAgentAndAccessToken(request.getHeader(USER_AGENT), token)) {
+                    DeviceEntity deviceEntity = mDeviceRepository.findByUserAgentAndUserId(
+                            request.getHeader(USER_AGENT),
+                            decodedJWT.getClaim("id").asLong());
+                    if (deviceEntity != null && deviceEntity.getAccessToken().equals(mEncryptedDecryptedUtil.Encrypted(token))) {
                         filterChain.doFilter(request, response);
                     } else {
                         new ObjectMapper().writeValue(
