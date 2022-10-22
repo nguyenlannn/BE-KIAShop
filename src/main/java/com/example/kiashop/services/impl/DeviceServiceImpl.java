@@ -14,12 +14,18 @@ import com.example.kiashop.repository.UserRepository;
 import com.example.kiashop.services.DeviceService;
 import com.example.kiashop.services.UserService;
 import com.example.kiashop.util.ConvertUtil;
+import com.example.kiashop.util.EncryptedDecryptedUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +44,7 @@ public class DeviceServiceImpl implements DeviceService {
     private final DeviceRepository mDeviceRepository;
     private final UserService mUserService;
     private final ConvertUtil mConvertUtil;
+    private final EncryptedDecryptedUtil mEncryptedDecryptedUtil;
 
     @Value("${jwt.secret}")
     private String JWT_SECRET;
@@ -45,18 +52,21 @@ public class DeviceServiceImpl implements DeviceService {
     @Value("${jwt.access.token.validity}")
     private Long JWT_ACCESS_TOKEN_VALIDITY;
 
+    private final HttpServletRequest request;
+
     @Override
-    public void updateToken(HttpServletRequest request, TokenProduceDto tokenProduceDto, String username) {
-        UserEntity userEntity = mUserRepository.findByUsername(username);
-        DeviceEntity deviceEntity = mDeviceRepository.findByUserAgentAndUserId(request.getHeader(USER_AGENT), userEntity.getId());
-        if (Objects.nonNull(deviceEntity)) {
-            deviceEntity.setAccessToken(tokenProduceDto.getAccessToken());
-            deviceEntity.setRefreshToken(tokenProduceDto.getRefreshToken());
+    public void updateToken(TokenProduceDto tokenProduceDto, UserEntity userEntity) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        DeviceEntity deviceEntity = mDeviceRepository.findByUserAgentAndUserId(
+                request.getHeader(USER_AGENT),
+                userEntity.getId());
+        if (deviceEntity != null) {
+            deviceEntity.setAccessToken(mEncryptedDecryptedUtil.Encrypted(tokenProduceDto.getAccessToken()));
+            deviceEntity.setRefreshToken(mEncryptedDecryptedUtil.Encrypted(tokenProduceDto.getRefreshToken()));
         } else {
             deviceEntity = DeviceEntity.builder()
                     .userAgent(request.getHeader(USER_AGENT))
-                    .accessToken(tokenProduceDto.getAccessToken())
-                    .refreshToken(tokenProduceDto.getRefreshToken())
+                    .accessToken(mEncryptedDecryptedUtil.Encrypted(tokenProduceDto.getAccessToken()))
+                    .refreshToken(mEncryptedDecryptedUtil.Encrypted(tokenProduceDto.getRefreshToken()))
                     .user(userEntity)
                     .build();
         }
