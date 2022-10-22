@@ -11,5 +11,5 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Long> {
 
     DeviceEntity findByUserAgentAndUserIdAndRefreshToken(String userAgent, Long userId, String refreshToken);
 
-    DeviceEntity findByUserAgentAndAccessToken(String userAgent, String accessToken);
+    Boolean existsByUserAgentAndAccessToken(String userAgent, String accessToken);
 }
