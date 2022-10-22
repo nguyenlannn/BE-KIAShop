@@ -74,49 +74,45 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public TokenProduceDto refreshToken(HttpServletRequest request) {
+    public TokenProduceDto refreshToken() {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if (Objects.nonNull(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refreshToken = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET.getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refreshToken);
                 String username = decodedJWT.getSubject();
-                String type = decodedJWT.getClaim("type").asString();
-                if (type.equalsIgnoreCase("refresh")) {
-                    UserEntity userEntity = mUserRepository.findByUsername(username);
-                    TokenProduceDto tokenProduceDto = TokenProduceDto.builder()
-                            .accessToken(JWT.create()
-                                    .withSubject(userEntity.getUsername())
-                                    .withExpiresAt(new Date(System.currentTimeMillis() + JWT_ACCESS_TOKEN_VALIDITY))
-                                    .withIssuer(request.getRequestURL().toString())
-                                    .withClaim("roles", userEntity.getRoles().stream().map(o -> o.getName().name()).collect(Collectors.toList()))
-                                    .withClaim("type", "access")
-                                    .sign(algorithm))
-                            .refreshToken(refreshToken)
-                            .build();
-                    updateAccessToken(request, userEntity.getId(), tokenProduceDto);
-                    return tokenProduceDto;
+
+                UserEntity userEntity = mUserRepository.findByUsername(username);
+                TokenProduceDto tokenProduceDto = TokenProduceDto.builder()
+                        .accessToken(JWT.create()
+                                .withSubject(userEntity.getUsername())
+                                .withExpiresAt(new Date(System.currentTimeMillis() + JWT_ACCESS_TOKEN_VALIDITY))
+                                .withIssuer(request.getRequestURL().toString())
+                                .withClaim("roles", userEntity.getRoles().stream()
+                                        .map(o -> o.getName().name())
+                                        .collect(Collectors.toList()))
+                                .withClaim("id", userEntity.getId())
+                                .sign(algorithm))
+                        .refreshToken(refreshToken)
+                        .build();
+                //update access token
+                DeviceEntity deviceEntity = mDeviceRepository.findByUserAgentAndUserId(
+                        request.getHeader(USER_AGENT),
+                        userEntity.getId());
+                if (deviceEntity != null && deviceEntity.getRefreshToken().equals(
+                        mEncryptedDecryptedUtil.Encrypted(tokenProduceDto.getRefreshToken()))) {
+                    deviceEntity.setAccessToken(mEncryptedDecryptedUtil.Encrypted(tokenProduceDto.getAccessToken()));
+                    mDeviceRepository.save(deviceEntity);
                 } else {
                     throw new UnauthorizedException("Unauthorized");
                 }
+
+                return tokenProduceDto;
             } catch (Exception exception) {
                 throw new UnauthorizedException(exception.getMessage());
             }
-        } else {
-            throw new UnauthorizedException("Unauthorized");
-        }
-    }
-
-    public void updateAccessToken(HttpServletRequest request, Long userId, TokenProduceDto tokenProduceDto) {
-        DeviceEntity deviceEntity = mDeviceRepository.findByUserAgentAndUserIdAndRefreshToken(
-                request.getHeader(USER_AGENT)
-                , userId
-                , tokenProduceDto.getRefreshToken());
-        if (Objects.nonNull(deviceEntity)) {
-            deviceEntity.setAccessToken(tokenProduceDto.getAccessToken());
-            mDeviceRepository.save(deviceEntity);
         } else {
             throw new UnauthorizedException("Unauthorized");
         }

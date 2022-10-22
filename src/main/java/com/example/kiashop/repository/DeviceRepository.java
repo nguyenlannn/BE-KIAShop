@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface DeviceRepository extends JpaRepository<DeviceEntity, Long> {
 
     DeviceEntity findByUserAgentAndUserId(String userAgent, Long userId);
-
-    DeviceEntity findByUserAgentAndUserIdAndRefreshToken(String userAgent, Long userId, String refreshToken);
 }

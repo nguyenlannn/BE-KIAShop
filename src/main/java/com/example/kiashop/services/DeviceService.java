@@ -14,7 +14,7 @@ public interface DeviceService {
 
     void updateToken(TokenProduceDto tokenProduceDto, UserEntity userEntity) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException;
 
-    TokenProduceDto refreshToken(HttpServletRequest request);
+    TokenProduceDto refreshToken();
 
     void logouts(String ids);
 
