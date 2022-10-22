@@ -1,6 +1,7 @@
 package com.example.kiashop.services;
 
 
+import com.example.kiashop.dto.consumes.RegisterConsumeDto;
 import com.example.kiashop.dto.consumes.UserConsumeDto;
 import com.example.kiashop.dto.produces.UserProduceDto;
 import com.example.kiashop.entities.UserEntity;
@@ -21,7 +22,7 @@ public interface UserService {
 
     UserProduceDto getUserDetail();
 
-    UserProduceDto createRegister(UserConsumeDto userConsumeDto);
+    UserProduceDto register(RegisterConsumeDto registerConsumeDto);
 
     UserProduceDto editUser(HashMap<String, Object> map);
 

@@ -5,6 +5,7 @@ import com.example.kiashop.bases.BaseResponseDto;
 import com.example.kiashop.config.TokenConfig;
 import com.example.kiashop.config.UserDetailServiceConfig;
 import com.example.kiashop.dto.consumes.LoginConsumeDto;
+import com.example.kiashop.dto.consumes.RegisterConsumeDto;
 import com.example.kiashop.dto.consumes.UserConsumeDto;
 import com.example.kiashop.dto.produces.TokenProduceDto;
 import com.example.kiashop.entities.UserEntity;
@@ -61,8 +62,8 @@ public class BasicAuthController extends BaseController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<BaseResponseDto> createRegister(@RequestBody UserConsumeDto userConsumeDto) {
-        return created(mUserService.createRegister(userConsumeDto), "Create user successful");
+    public ResponseEntity<BaseResponseDto> createRegister(@RequestBody RegisterConsumeDto registerConsumeDto) {
+        return created(mUserService.register(registerConsumeDto), "Create user successful");
     }
 
     @PostMapping("/reset-password")

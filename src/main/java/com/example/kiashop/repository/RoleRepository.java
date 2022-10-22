@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
-    Collection<RoleEntity> findByName(RoleEnum roleEnum);
+    List<RoleEntity> findByName(RoleEnum roleEnum);
 }
