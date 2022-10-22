@@ -56,8 +56,8 @@ public class BasicAuthController extends BaseController {
     }
 
     @PatchMapping("/refresh-token")
-    public ResponseEntity<BaseResponseDto> refreshToken(HttpServletRequest request) {
-        return success(mDeviceService.refreshToken(request), "Refresh token successful");
+    public ResponseEntity<BaseResponseDto> refreshToken() {
+        return success(mDeviceService.refreshToken(), "Refresh token successful");
     }
 
     @PostMapping("/register")
