@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.kiashop.dto.consumes.RegisterConsumeDto;
+import com.example.kiashop.dto.consumes.ResetPasswordConsumeDto;
 import com.example.kiashop.dto.consumes.UserConsumeDto;
 import com.example.kiashop.dto.produces.UserProduceDto;
 import com.example.kiashop.entities.DeviceEntity;
@@ -133,11 +134,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void resetPassword(String username) throws MessagingException {
-        UserEntity userEntity = mUserRepository.findByUsernameOrEmail(username, username);
-        if (userEntity == null)
-            throw new BadRequestException("account does not exist");
-
+    public void resetPassword(ResetPasswordConsumeDto resetPasswordConsumeDto) throws MessagingException {
+        UserEntity userEntity = mUserRepository.findByUsernameOrEmail(
+                resetPasswordConsumeDto.getUsername(),
+                resetPasswordConsumeDto.getUsername());
+        if (userEntity == null) {
+            throw new BadRequestException("Account does not exist");
+        }
         String gen = RandomStringUtils.randomAlphanumeric(8);
         userEntity.setPassword(mPasswordEncoder.encode(gen));
 

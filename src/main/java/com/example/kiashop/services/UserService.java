@@ -2,6 +2,7 @@ package com.example.kiashop.services;
 
 
 import com.example.kiashop.dto.consumes.RegisterConsumeDto;
+import com.example.kiashop.dto.consumes.ResetPasswordConsumeDto;
 import com.example.kiashop.dto.consumes.UserConsumeDto;
 import com.example.kiashop.dto.produces.UserProduceDto;
 import com.example.kiashop.entities.UserEntity;
@@ -26,7 +27,7 @@ public interface UserService {
 
     UserProduceDto editUser(HashMap<String, Object> map);
 
-    void resetPassword(String username) throws MessagingException;
+    void resetPassword(ResetPasswordConsumeDto resetPasswordConsumeDto) throws MessagingException;
 
     UserProduceDto editPasswordOrMail(HashMap<String, Object> map, HttpServletRequest request);
 }
