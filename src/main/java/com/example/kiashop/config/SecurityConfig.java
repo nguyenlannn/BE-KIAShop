@@ -9,6 +9,7 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,6 +31,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @EnableJpaAuditing
+@EnableAsync
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements AuditorAware<String> {
 

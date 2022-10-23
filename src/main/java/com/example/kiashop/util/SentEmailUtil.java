@@ -3,6 +3,7 @@ package com.example.kiashop.util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
@@ -14,6 +15,7 @@ public class SentEmailUtil {
 
     private final JavaMailSender mJavaMailSender;
 
+    @Async
     public void senPasswordNew(String email, String code) throws MessagingException {
         MimeMessage message = mJavaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
