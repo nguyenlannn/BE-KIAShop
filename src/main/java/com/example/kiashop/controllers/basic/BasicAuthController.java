@@ -7,7 +7,6 @@ import com.example.kiashop.config.UserDetailServiceConfig;
 import com.example.kiashop.dto.consumes.LoginConsumeDto;
 import com.example.kiashop.dto.consumes.RegisterConsumeDto;
 import com.example.kiashop.dto.consumes.ResetPasswordConsumeDto;
-import com.example.kiashop.dto.consumes.UserConsumeDto;
 import com.example.kiashop.dto.produces.TokenProduceDto;
 import com.example.kiashop.entities.UserEntity;
 import com.example.kiashop.exceptions.BadRequestException;
@@ -25,7 +24,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -63,7 +62,7 @@ public class BasicAuthController extends BaseController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<BaseResponseDto> createRegister(@RequestBody RegisterConsumeDto registerConsumeDto) {
+    public ResponseEntity<BaseResponseDto> createRegister(@RequestBody @Valid RegisterConsumeDto registerConsumeDto) {
         return created(mUserService.register(registerConsumeDto), "Create user successful");
     }
 
