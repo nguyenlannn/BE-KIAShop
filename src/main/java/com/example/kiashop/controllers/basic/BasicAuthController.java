@@ -6,6 +6,7 @@ import com.example.kiashop.config.TokenConfig;
 import com.example.kiashop.config.UserDetailServiceConfig;
 import com.example.kiashop.dto.consumes.LoginConsumeDto;
 import com.example.kiashop.dto.consumes.RegisterConsumeDto;
+import com.example.kiashop.dto.consumes.ResetPasswordConsumeDto;
 import com.example.kiashop.dto.consumes.UserConsumeDto;
 import com.example.kiashop.dto.produces.TokenProduceDto;
 import com.example.kiashop.entities.UserEntity;
@@ -67,8 +68,8 @@ public class BasicAuthController extends BaseController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<BaseResponseDto> resetPassword(@RequestBody LoginConsumeDto loginConsumeDto) throws MessagingException {
-        mUserService.resetPassword(loginConsumeDto.getUsername());
+    public ResponseEntity<BaseResponseDto> resetPassword(@RequestBody ResetPasswordConsumeDto resetPasswordConsumeDto) throws MessagingException {
+        mUserService.resetPassword(resetPasswordConsumeDto);
         return success("Reset password successful");
     }
 }
