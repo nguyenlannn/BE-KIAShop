@@ -27,8 +27,8 @@ public class AdminProductController extends BaseController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> editProduct(@PathVariable Long id
-            , @RequestBody HashMap<String, Object> map) {
+    public ResponseEntity<BaseResponseDto> editProduct(@PathVariable Long id,
+                                                       @RequestBody HashMap<String, Object> map) {
         return success(mProductService.editProduct(id, map), "Update product successful");
     }
 

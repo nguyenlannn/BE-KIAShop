@@ -22,6 +22,9 @@ import java.util.Collection;
 @SuperBuilder
 public class ProductEntity extends BaseEntity {
 
+    @Column(columnDefinition = "DEFAULT 0")
+    private Boolean isPin;
+
     private String name;
 
     private BigDecimal price;

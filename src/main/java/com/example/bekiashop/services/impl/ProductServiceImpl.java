@@ -70,6 +70,9 @@ public class ProductServiceImpl implements ProductService {
         }
         for (String i : map.keySet()) {
             switch (i) {
+                case "isPin":
+                    productEntity.setIsPin(Boolean.valueOf(map.get(i).toString()));
+                    break;
                 case "name":
                     productEntity.setName(map.get(i).toString());
                     break;
@@ -140,14 +143,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public BaseListProduceDto<ProductProduceDto> searchByTitleOrDescription(
-            String search
-            , BigDecimal priceMin
-            , BigDecimal priceMax
-            , String categoryIds
-            , Long productId
-            , Pageable pageable) {
-
+    public BaseListProduceDto<ProductProduceDto> searchByTitleOrDescription(String search,
+                                                                            BigDecimal priceMin,
+                                                                            BigDecimal priceMax,
+                                                                            String categoryIds,
+                                                                            Long productId,
+                                                                            Integer isPin,
+                                                                            Pageable pageable) {
         Page<ProductEntity> productEntityPage = mProductRepository.searchByTitleOrDescription(
                 search
                 , priceMin
@@ -155,6 +157,7 @@ public class ProductServiceImpl implements ProductService {
                 , categoryIds
                 , !categoryIds.equals("-1") ? mProductRepository.getProductIdByCategoryId(mConvertUtil.toArray(categoryIds)) : null
                 , productId
+                ,isPin
                 , pageable);
 
         List<ProductProduceDto> productProduceDtoList = productEntityPage.getContent().stream().map(o -> {

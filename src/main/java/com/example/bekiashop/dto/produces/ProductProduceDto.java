@@ -17,6 +17,8 @@ import java.util.List;
 @SuperBuilder
 public class ProductProduceDto extends BaseProduceDto<Long> {
 
+    private Boolean isPin;
+
     private String name;
 
     private BigDecimal price;

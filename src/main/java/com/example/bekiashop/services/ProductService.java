@@ -19,13 +19,13 @@ public interface ProductService {
 
     ProductProduceDto getProductById(Long id);
 
-    BaseListProduceDto<ProductProduceDto> searchByTitleOrDescription(
-            String search
-            , BigDecimal priceMin
-            , BigDecimal priceMax
-            , String categoryId
-            , Long productId
-            , Pageable pageable);
+    BaseListProduceDto<ProductProduceDto> searchByTitleOrDescription(String search,
+                                                                     BigDecimal priceMin,
+                                                                     BigDecimal priceMax,
+                                                                     String categoryId,
+                                                                     Long productId,
+                                                                     Integer isPin,
+                                                                     Pageable pageable);
 
     BaseListProduceDto<ProductProduceDto> searchProductByProductId(Long id, Pageable pageable);
 }
