@@ -19,19 +19,20 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Query(nativeQuery = true
             , value = "SELECT * FROM product_entity " +
             "WHERE deleted_flag IS FALSE " +
-            "AND IF(?1 != -1, MATCH(`name`, `description`) AGAINST(?1), ?1) " +
-            "AND IF(?2 != -1, price / 100 * (100 - discount) >= ?2, ?2) " +
-            "AND IF(?3 != -1, price / 100 * (100 - discount) <= ?3, ?3) " +
-            "AND IF(?4 != -1, id IN (?5), ?4) " +
-            "AND IF(?6 != -1, id = ?6, ?6) ")
-    Page<ProductEntity> searchByTitleOrDescription(
-            String search
-            , BigDecimal priceMin
-            , BigDecimal priceMax
-            , String categoryIds
-            , List<Long> categoryIdList
-            , Long productId
-            , Pageable pageable);
+            "AND IF(?1 != -1, MATCH(`name`, `description`) AGAINST(?1), 1) " +
+            "AND IF(?2 != -1, price / 100 * (100 - discount) >= ?2, 1) " +
+            "AND IF(?3 != -1, price / 100 * (100 - discount) <= ?3, 1) " +
+            "AND IF(?4 != -1, id IN (?5), 1) " +
+            "AND IF(?6 != -1, id = ?6, 1) "+
+            "AND IF(?7 != -1, is_pin = ?7, 1)")
+    Page<ProductEntity> searchByTitleOrDescription(String search,
+                                                   BigDecimal priceMin,
+                                                   BigDecimal priceMax,
+                                                   String categoryIds,
+                                                   List<Long> categoryIdList,
+                                                   Long productId,
+                                                   Integer isPin,
+                                                   Pageable pageable);
 
     @Query(nativeQuery = true
             , value = "SELECT p.id FROM product_entity p " +

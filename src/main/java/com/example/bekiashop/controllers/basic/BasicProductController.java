@@ -27,24 +27,25 @@ public class BasicProductController extends BaseController {
     }
 
     @GetMapping
-    public ResponseEntity<BaseResponseDto> searchByTitleOrDescription(
-            @RequestParam(defaultValue = "0") Integer page
-            , @RequestParam(defaultValue = "10") Integer size
-            , @RequestParam(required = false) String sort
-            , @RequestParam(defaultValue = "-1") String search
-            , @RequestParam(defaultValue = "-1") BigDecimal priceMin
-            , @RequestParam(defaultValue = "-1") BigDecimal priceMax
-            , @RequestParam(defaultValue = "-1") String categoryId
-            , @RequestParam(defaultValue = "-1") Long productId) {
+    public ResponseEntity<BaseResponseDto> searchByTitleOrDescription(@RequestParam(defaultValue = "0") Integer page,
+                                                                      @RequestParam(defaultValue = "10") Integer size,
+                                                                      @RequestParam(required = false) String sort,
+                                                                      @RequestParam(defaultValue = "-1") String search,
+                                                                      @RequestParam(defaultValue = "-1") BigDecimal priceMin,
+                                                                      @RequestParam(defaultValue = "-1") BigDecimal priceMax,
+                                                                      @RequestParam(defaultValue = "-1") String categoryId,
+                                                                      @RequestParam(defaultValue = "-1") Long productId,
+                                                                      @RequestParam(defaultValue = "-1") Integer isPin) {
         Pageable pageable = mConvertUtil.buildPageable(page, size, sort);
         return success(mProductService.searchByTitleOrDescription(
-                        search
-                        , priceMin
-                        , priceMax
-                        , categoryId
-                        , productId
-                        , pageable)
-                , "Get data successful");
+                        search,
+                        priceMin,
+                        priceMax,
+                        categoryId,
+                        productId,
+                        isPin,
+                        pageable),
+                "Get data successful");
     }
 
     @GetMapping("/{id}/comment")
