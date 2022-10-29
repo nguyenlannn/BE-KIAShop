@@ -36,6 +36,7 @@ public class BeBenShopApplication extends SpringBootServletInitializer {
                 mUserService.createAdmin(UserEntity.builder()
                         .username("admin")
                         .password("123")
+                        .email("lannhatthuy@gmail.com")
                         .build());
             } catch (Exception ignored) {
             }
