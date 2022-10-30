@@ -104,9 +104,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Audi
         list.add(DOMAIN1);
         config.setAllowedOrigins(list);
         config.addAllowedHeader("*");
-        config.addAllowedMethod("*");;
+        config.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
     }
 
