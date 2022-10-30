@@ -120,7 +120,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Audi
         list.add(DOMAIN2);
         list.add(DOMAIN3);
         list.add(DOMAIN4);
-        list.add(DOMAIN5);
+        list.add(DOMAIN5);;
         list.add(DOMAIN6);
         config.setAllowedOrigins(list);
         config.addAllowedHeader("*");
