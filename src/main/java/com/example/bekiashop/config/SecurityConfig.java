@@ -23,10 +23,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -96,17 +93,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Audi
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        List<String> list = new ArrayList<>();
-        list.add(DOMAIN);
-        list.add(DOMAIN1);
-        config.setAllowedOrigins(list);
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(DOMAIN,DOMAIN1));
+        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
