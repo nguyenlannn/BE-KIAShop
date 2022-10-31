@@ -63,6 +63,7 @@ public class ProductConsumeDto implements Serializable {
                 .accessory(accessory)
                 .washingMethod(washingMethod)
                 .description(description)
+                .isPin(false)
                 .build();
     }
 
